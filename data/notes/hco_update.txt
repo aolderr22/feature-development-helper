@@ -1,0 +1,5 @@
+You need to script the database to know which tables contain HCO_ID.
+
+Then you must find out which of these tables contain a reference to HCO_ID=5117.
+
+You then need to generate update statements.
