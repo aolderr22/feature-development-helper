@@ -1,0 +1,14 @@
+[
+    {
+        "task": "#3434",
+        "description": "Refactor the PDF generator to be data driven",
+        "dateAvailable": "2026-09-24",
+        "availabilityPrerequisite": "Summit must occur first."
+    },
+    {
+        "task": "#3435",
+        "description": "SPIKE - Research the merge of HCO_ID (5117, 3802)",
+        "dateAvailable": "2026-07-01",
+        "availabilityPrerequisite": "null"
+    }
+]

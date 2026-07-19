@@ -1,0 +1,1 @@
+The project-structure.md file should display a hierarchical representation of the directories. This project structure is always subject to change and the project structure markdown file should be periodically updated accordingly.
