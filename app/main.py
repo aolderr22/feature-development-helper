@@ -1,15 +1,23 @@
 from pathlib import Path
 
+from fastapi import FastAPI
+from pydantic import BaseModel
+
 from app.tools import check_task_availability
 from app.task_config import get_task
 
+app = FastAPI(title="Feature Development Helper")
 
-def determine_task(user_input):
+class TaskRequest(BaseModel):
+    user_input: str
+
+
+def determine_task(user_input: str):
     """
     Determines the task_id from the user's request.
 
     This is a temporary classifier.
-    Later this can be replaced with an LLM tool call.
+    Later this can be replaced with embeddings or an LLM.
     """
 
     user_input = user_input.lower()
@@ -17,7 +25,7 @@ def determine_task(user_input):
     tasks = {
         "pdf": "pdf_refactor",
         "hco": "hco_update",
-        "hco_id": "hco_update"
+        "hco_id": "hco_update",
     }
 
     for keyword, task_id in tasks.items():
@@ -27,7 +35,7 @@ def determine_task(user_input):
     return None
 
 
-def load_notes(task_id):
+def load_notes(task_id: str):
     """
     Loads task-specific notes from the location
     defined in tasks.json.
@@ -46,7 +54,7 @@ def load_notes(task_id):
     return notes_file.read_text()
 
 
-def process_request(user_input):
+def process_request(user_input: str):
     """
     Main application workflow.
     """
@@ -54,33 +62,44 @@ def process_request(user_input):
     task_id = determine_task(user_input)
 
     if task_id is None:
-        return (
-            "I could not determine the task. "
-            "Please specify a software task."
-        )
-
+        return {
+            "response": (
+                "I could not determine the task. "
+                "Please specify a software task."
+            )
+        }
 
     availability = check_task_availability(task_id)
 
-
     if not availability["approved"]:
-
-        return (
-            f"Today is {availability['current_date']}. "
-            f"{availability['reason']} "
-            f"Please choose another task."
-        )
-
+        return {
+            "response": (
+                f"Today is {availability['current_date']}. "
+                f"{availability['reason']} "
+                f"Please choose another task."
+            )
+        }
 
     notes = load_notes(task_id)
 
+    return {
+        "response": (
+            "This task is approved.\n\n"
+            "Here are the notes for completing it:\n\n"
+            f"{notes}"
+        )
+    }
 
-    return (
-        "This task is approved.\n\n"
-        "Here are the notes for completing it:\n\n"
-        f"{notes}"
-    )
 
+@app.get("/")
+def root():
+    return {
+        "message": "Feature Development Helper API is running."
+    }
+
+@app.post("/task")
+def task(request: TaskRequest):
+    return process_request(request.user_input)
 
 if __name__ == "__main__":
 
@@ -94,4 +113,4 @@ if __name__ == "__main__":
         response = process_request(user_input)
 
         print("\nAI Response:")
-        print(response)
+        print(response["response"])
