@@ -4,13 +4,15 @@
       "name": "PDF Refactoring",
       "available_after": "2026-09-24",
       "prerequisites": ["2026 summit"],
-      "notes_file": "data/notes/pdf_refactor.txt"
+      "notes_file": "data/notes/pdf_refactor.txt",
+      "story_url": "https://example.com/stories/pdf_refactor"
     },
     "hco_update": {
       "name": "HCO_ID Update",
       "available_after": "2026-01-01",
       "prerequisites": [],
-      "notes_file": "data/notes/hco_update.txt"
+      "notes_file": "data/notes/hco_update.txt",
+      "story_url": "https://example.com/stories/hco_update"
     }
   }
 }
