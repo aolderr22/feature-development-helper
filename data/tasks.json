@@ -1,16 +1,16 @@
-[
-    {
-        "task": "#3434",
-        "description": "Refactor the PDF generator to be data driven",
-        "dateAvailable": "2026-09-24",
-        "availabilityPrerequisite": "Summit must occur first.",
-        "notes_path": "null"
+{
+  "tasks": {
+    "pdf_refactor": {
+      "name": "PDF Refactoring",
+      "available_after": "2026-09-24",
+      "prerequisites": ["2026 summit"],
+      "notes_file": "data/notes/pdf_refactor.txt"
     },
-    {
-        "task": "#3435",
-        "description": "SPIKE - Research the merge of HCO_ID (5117, 3802)",
-        "dateAvailable": "2026-07-01",
-        "availabilityPrerequisite": "null",
-        "notes_path": "data/notes/hco_update.txt"
+    "hco_update": {
+      "name": "HCO_ID Update",
+      "available_after": "2026-01-01",
+      "prerequisites": [],
+      "notes_file": "data/notes/hco_update.txt"
     }
-]
+  }
+}

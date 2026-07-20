@@ -1,0 +1,9 @@
+I want this ai app to have the software engineer enter a description of the desired task, without them knowing the task_id. For example, they can enter:
+Engineer: "I want to refactor the PDF."
+AI: "I'm sorry. That task is not ready as we have not reached 2026 summit date. Please select another."
+Engineer: "I want to update the HCO_ID."
+AI: "You need to script the database to know which tables contain HCO_ID.
+
+Then you must find out which of these tables contain a reference to HCO_ID=5117.
+
+You then need to generate update statements."
