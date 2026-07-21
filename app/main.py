@@ -11,7 +11,6 @@ app = FastAPI(title="Feature Development Helper")
 class TaskRequest(BaseModel):
     user_input: str
 
-
 def determine_task(user_input: str):
     """
     Determines the task_id from the user's request.
@@ -71,12 +70,25 @@ def process_request(user_input: str):
 
     availability = check_task_availability(task_id)
 
+    task = get_task(task_id)
+    prerequisite_note = ""
+
+    if task_id == "pdf_refactor" and task is not None:
+        prerequisites = task.get("prerequisites", [])
+        if prerequisites:
+            prerequisite_note = (
+                "Prerequisites: "
+                + ", ".join(prerequisites)
+                + "."
+            )
+
     if not availability["approved"]:
         return {
             "response": (
                 f"Today is {availability['current_date']}. "
                 f"{availability['reason']} "
                 f"Please choose another task."
+                f"\n\n{prerequisite_note}" if prerequisite_note else ""
             )
         }
 
@@ -85,6 +97,7 @@ def process_request(user_input: str):
     return {
         "response": (
             "This task is approved.\n\n"
+            f"{prerequisite_note}\n\n"
             "Here are the notes for completing it:\n\n"
             f"{notes}"
         )
